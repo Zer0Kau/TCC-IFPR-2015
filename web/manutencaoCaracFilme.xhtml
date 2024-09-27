@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link href="faces/css/bootstrap.min.css" rel="stylesheet"></link>
+<link rel="icon" href="fotos/favicon.jpg" type="image/x-icon"/>
+<link rel="shortcut icon" href="fotos/favicon.jpg" type="image/x-icon" />
+        <link href="faces/css/small-business.css" rel="stylesheet"></link>
+        <title>Gerenciamento de Características de um Filme</title>       
+
+    </h:head>
+    <h:body>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="GerenciadorPaginas.xhtml">
+                        <img src="fotos/logo.png" alt=""></img>
+                    </a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                       <li>
+                        <a href="GerenciadorPaginas.xhtml">Manutenção</a>
+                    </li>
+                    <li>
+                        <a action="#{emailControle.attListaEmail()}" href="serv.xhtml">Serviços</a>
+                    </li>
+                    <li>
+                        <a href="ajuda.xhtml?faces-redirect=true">Ajuda</a>
+                    </li>
+                    <li>
+                        <a onclick="PF('desconect').show()">Desconectar</a>
+                    </li>
+                    
+                            
+                            <li>
+                                <a>Administrador: <h:outputText value="#{usuarioControle.usuario.nome}"></h:outputText></a>
+                            </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container">
+
+            <!-- Heading Row -->
+            <div class="row">
+                <h3>Manutenção de Características de um Filme:</h3>
+                <br/>
+
+                <h:form  id="formTabela">
+                        <h:messages errorClass="error"/>
+                    <div align="right"><p:inputText value="#{caracFilmeControle.titulo}"/> <p:commandButton action="#{caracFilmeControle.atualizarPesq()}" icon="ui-icon-search" update="formTabela"/></div>
+                    
+                    <p:dataTable id="tabela"
+                                 var="aux" 
+                                 rows="9"
+                                     paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 value="#{caracFilmeControle.listas}">
+
+
+
+                        <p:column headerText="Filme:">
+                            <h:outputText 
+                                value="#{aux.filme.titulo}"
+
+                                />
+                        </p:column>
+
+                        <p:column headerText="Tipo da Característica:">
+                            <h:outputText 
+                                value="#{aux.caracteristica.tipoCarac.descricao_tc}"/>
+                        </p:column>
+
+                        <p:column headerText="Característica:">
+                            <h:outputText 
+                                value="#{aux.caracteristica.descricao_c}"/>
+                        </p:column>
+
+                        <p:column headerText="Opções" style="width: 100px">
+                            <p:commandButton icon="ui-icon-pencil" 
+                                             oncomplete="PF('dialog').show()"
+                                             update=":formCadastro :formTabela"
+                                             action="#{caracFilmeControle.preparaAlterarCaracFilme()}">
+                                <p:resetInput target=":formCadastro:painel" />
+                                <f:setPropertyActionListener 
+                                    value="#{aux}" 
+                                    target="#{caracFilmeControle.caracFilme}" />
+                            </p:commandButton>
+
+                            <p:commandButton icon="ui-icon-cancel" 
+                                             oncomplete="PF('excluir').show()">
+                                <f:setPropertyActionListener value="#{aux}" target="#{caracFilmeControle.caracFilme}" />
+                            </p:commandButton>
+
+                        </p:column>
+
+                    </p:dataTable>
+                    <br></br>
+                    <p:commandButton value="Novo" 
+                                     action="#{caracFilmeControle.preparaIncluirCaracFilme()}" 
+                                     oncomplete="PF('dialog').show()" 
+                                     update=":formCadastro">
+                        <p:resetInput target=":formCadastro:painel" />
+                    </p:commandButton>
+
+                </h:form>
+
+
+                <!--PAINEL PARA EXCLUIR-->
+                <p:confirmDialog id="confirmaExclusao" 
+                                 message="Deseja realmente excluir o registro?"  
+                                 header="Confirma a Exclusão?" 
+                                 severity="alert" 
+                                 widgetVar="excluir">
+                    <h:form id="formPainelExcluir">
+                        <p:commandButton value="Sim" 
+                                         oncomplete="PF('excluir').hide()" 
+                                         update=":formTabela :formCadastro"  
+                                         actionListener="#{caracFilmeControle.excluirCaracFilme()}"/>  
+                        <p:commandButton value="Não" oncomplete="PF('excluir').hide()"/> 
+                    </h:form>
+                </p:confirmDialog>  
+
+                <!--PAINEL PARA CADASTRO-->
+                <p:dialog
+                    header="Cadastro de Característica de um Filme:"
+                    widgetVar="dialog"
+                    resizable="false"
+                    modal="true"
+
+                    >
+
+                    <h:form id="formCadastro">
+                       
+                        
+                        <h:panelGrid columns="2" id="painel">
+
+                             <p:outputLabel value="Tipo de Característica: "
+                                           for="TCarac"
+                                           />
+                            <p:selectOneMenu id="TCarac"
+                                             filter="true"
+                                                value="#{caracFilmeControle.idTipoCaracteristica}">
+                                <f:selectItem itemLabel="Selecione"  itemValue="%"/>
+                                <f:selectItems value="#{caracFilmeControle.listaTC}" 
+                                               var="fs" 
+                                               itemLabel="#{fs.descricao_tc}"  
+                                               itemValue="#{fs.idTipoCarac}" />
+                                <f:ajax render=":formCadastro:Carac" 
+                            event="valueChange" 
+                            listener="#{caracFilmeControle.pesquisar(fs.idTipoCarac)}"
+                            />
+                                
+                            </p:selectOneMenu>
+                             
+                             <p:outputLabel value="Característica: "
+                                           for="Carac"
+                                           />
+                            <p:selectOneMenu id="Carac"
+                                             filter="true"
+                                             required="true" 
+                                             value="#{caracFilmeControle.idCaracteristica}" >
+                                <f:selectItem itemLabel="Selecione"/>
+                                <f:selectItems value="#{caracFilmeControle.cartec}" 
+                                               var="a" itemLabel="#{a.descricao_c}"  
+                                               itemValue="#{a.idCarac}"/>
+                            </p:selectOneMenu>
+                             
+                            <p:outputLabel value="Filme: "
+                                           for="filme"
+                                           />
+                            <p:selectOneMenu id="filme" 
+                                             required="true" 
+                                             filter="true"
+                                             value="#{caracFilmeControle.idFilme}" >
+                                <f:selectItem itemLabel="Selecione"/>
+                                <f:selectItems value="#{filmeControle.listas}" 
+                                               var="s" itemLabel="#{s.titulo}"  
+                                               itemValue="#{s.idFilme}"/>
+                            </p:selectOneMenu>
+
+                            <p:commandButton value="Salvar" 
+                                             action="#{caracFilmeControle.salvarCaracFilme()}" 
+                                             update=":formTabela :formCadastro"
+                                             oncomplete="validar(xhr,status,args,'dialog');" 
+                                             icon="ui-icon-disk" 
+                                             />
+                            <p:commandButton value="Cancelar" icon="ui-icon-close" oncomplete="PF('dialog').hide()"/>
+
+
+                        </h:panelGrid>
+
+                    </h:form>
+
+                </p:dialog>
+                <p:confirmDialog id="confirmaSaida" 
+                                 message="Deseja realmente sair?"  
+                                 header="Saindo" 
+                                 widgetVar="desconect">
+                    <h:form id="painelSair"> 
+                        <p:commandButton value="Sim" action="#{usuarioControle.doLogout()}" oncomplete="PF('desconect').hide()"/>
+                         <p:commandButton value="Não" oncomplete="PF('desconect').hide()"/>
+                    </h:form>
+                </p:confirmDialog> 
+            </div>
+        </div>
+</h:body>
+
+<script type="text/javascript">
+    function validar(xhr, status, args, dlg) {
+        if (args.validationFailed) {
+
+        } else {
+            PF(dlg).hide();
+        }
+    }
+
+</script>
+
+</html>
+

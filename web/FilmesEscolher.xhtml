@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link href="faces/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <link href="faces/css/small-business.css" rel="stylesheet"/>
+        <title>Filmes em produção</title>       
+<link rel="icon" href="fotos/favicon.jpg" type="image/x-icon"/>
+<link rel="shortcut icon" href="fotos/favicon.jpg" type="image/x-icon" />
+    </h:head>
+    <h:body>
+
+
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+
+
+        <link href="faces/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link href="faces/css/small-business.css" rel="stylesheet"/>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="Inicio.xhtml">
+                        <img src="fotos/logo.png" alt=""></img>
+                    </a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                                <a href="Inicio.xhtml">Início</a>
+                            </li>
+                            <li>
+                                <a href="Usuario.xhtml" value="#{usuarioControle.atualizaInfoUsu()}">Meu Perfil</a>
+                            </li>
+                            <li>
+                                <a href="FilmesUsuario.xhtml" action="#{usuarioFilmeControle.atualizarFilme2()}">Meus Filmes</a>
+                            </li>
+                            <li>
+                                <a href="contato.xhtml">Contato</a>
+                            </li>
+                            <li>
+                                <a onclick="PF('desconect').show()">Desconectar</a>
+                        
+                            </li>
+                          
+                            
+                            <li>
+                                <a>Bem vindo: <h:outputText value="#{usuarioControle.usuario.nome}"></h:outputText></a>
+                            </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container">
+
+            <!-- Heading Row -->
+            <div class="row">
+                <div align="center"><b><h1>Filmes em produção:</h1></b>
+                    <h5>Aqui você encontra todos os filmes que ainda não foram lançados ou estão em cartaz no momento, adicione-os a sua lista para ser informado no dia qual estas obras estarão no cinema!</h5></div>
+                <h:form  id="formTabela">
+                    <div align="right"><p:inputText value="#{filmeControle.titulo1}"/> <p:commandButton action="#{filmeControle.atualizarPesqe()}" icon="ui-icon-search" update="formTabela"/></div>
+                    <p:growl id="msg" life="2000"/>
+                    <p:dataTable id="tabela"
+                                 var="aux" 
+                                 rows="5"
+                                 value="#{filmeControle.listaEscolha}"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15"
+                                 emptyMessage="Nenhum filme em produção no momento :(">
+
+
+
+
+                        <p:column headerText="Título:">
+                            <b><h:outputText 
+                                value="#{aux.titulo}"
+
+                                /></b>
+                        </p:column>
+                        
+                        <p:column headerText="Página do Filme:">
+                            <h:commandLink action="#{caracFilmeControle.atualizarPaginaFilme(aux.idFilme)}">Clique Aqui!</h:commandLink>
+                        </p:column>
+
+                        <p:column headerText="Status do filme:">
+                            <h:outputText 
+                                value="#{aux.status.descricao_s}"
+
+                                />
+                        </p:column>
+
+                        <p:column headerText="Data de Lançamento:">
+                            <h:outputText 
+                                value="#{aux.data_Lancamento}">
+                               <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Nota parcial IMDB:">
+                            <h:outputText 
+                                value="#{aux.nota_IMDB}"/>
+                        </p:column>
+
+                        <p:column headerText="Adicionar aos Meus Filmes:" style="width: 100px">
+                            <p:commandButton icon="ui-icon-arrowthickstop-1-s"
+                                             oncomplete="PF('msg').show()"
+                                             action="#{filmeControle.inserirUSUFILME(aux.idFilme)}"
+                                             update="formTabela">
+                            </p:commandButton>
+
+                        </p:column>
+                    </p:dataTable>
+
+                </h:form>
+                <p:confirmDialog id="confirmaExclusao" 
+                                 message="Filme adicionado com sucesso a lista dos seus filmes!"  
+                                 header="Mensagem." 
+                                 widgetVar="msg">
+                    <h:form id="formPainelExcluir"> 
+                        <p:commandButton value="Obrigado!" oncomplete="PF('msg').hide()"/> 
+                    </h:form>
+                </p:confirmDialog>  
+<p:confirmDialog id="confirmaSaida" 
+                                 message="Deseja realmente sair?"  
+                                 header="Saindo" 
+                                 widgetVar="desconect">
+                    <h:form id="painelSair"> 
+                        <p:commandButton value="Sim" action="#{usuarioControle.doLogout()}" oncomplete="PF('desconect').hide()"/>
+                         <p:commandButton value="Não" oncomplete="PF('desconect').hide()"/>
+                    </h:form>
+                </p:confirmDialog> 
+
+
+            </div>
+        </div>
+    </h:body>
+    <script type="text/javascript">
+        function validar(xhr, status, args, dlg) {
+            if (args.validationFailed) {
+
+            } else {
+                PF(dlg).hide();
+            }
+        }
+
+    </script>
+
+</html>
+

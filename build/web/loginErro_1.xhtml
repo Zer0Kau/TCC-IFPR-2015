@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:head>
+        <link href="faces/css/bootstrap.min.css" rel="stylesheet"/>
+<link rel="icon" href="fotos/favicon.jpg" type="image/x-icon"/>
+<link rel="shortcut icon" href="fotos/favicon.jpg" type="image/x-icon" />
+        <!-- Custom CSS -->
+        <link href="faces/css/small-business.css" rel="stylesheet"/>
+        <title>Erro de Login</title> 
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+        <!-- Bootstrap Core CSS -->
+        <link href="faces/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link href="faces/css/small-business.css" rel="stylesheet"/>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </h:head>
+    <h:body>
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <img src="fotos/logo.png" alt=""></img>
+                    </a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#">Cadastre-se para acessar o site.</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </nav>
+        <div class="container">
+            <div class="row justify-content-center">
+                <h:form styleClass="form-group wa-form col-xs-4 col-sm-6 col-md-6 col-lg-3 col-xl-3" id="formTabela">          
+                    <h2 class="lato wa-form-desc">Por favor, entre:</h2>
+                    <h:inputText a:placeholder="Nome de Usuário" styleClass="form-control wa-input" id="user" value="#{usuarioControle.usuario.apelido}"/>                    
+                    <h:message for="user"/>                    
+                    <h:inputSecret a:placeholder="Senha" styleClass="form-control wa-input" id="pass" value="#{usuarioControle.usuario.senha}"/>
+                    <h:message for="pass"/>
+                    <div class="container">
+                        <br/>
+                        <div class="row justify-content-center">
+                            <h:commandButton id="t1" action="#{usuarioControle.login()}" styleClass="col-12 btn btn-primary"  value="Login"/>                            
+                           &nbsp;&nbsp; <h:link outcome="cadastro" id="t2"  styleClass="col-12 btn btn-primary" 
+                                             value="Cadastrar-se" />                                          
+                        </div>
+                        <P> <FONT COLOR="red">Sua conta foi excluída!</FONT></P>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>
+            function validar(xhr, status, args, dlg) {
+                if (args.validationFailed) {
+
+                } else {
+                    PF(dlg).hide();
+                }
+            }
+
+        </script>
+    </h:body>            
+</html>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FilmesMaisEscolhid" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c4c580a5-07f3-4682-8e97-456d17f20608">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="219"/>
+	<style name="Heading 1" fontSize="16" isBold="true"/>
+	<queryString language="SQL">
+		<![CDATA[select f.titulo, count(uf.Filme_idFilme) from usuariofilme uf, filme f where uf.Filme_idFilme=f.idFilme group by uf.Filme_idFilme having count(uf.Filme_idFilme)>0]]>
+	</queryString>
+	<field name="titulo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="count(uf.Filme_idFilme)" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="153" splitType="Stretch">
+			<staticText>
+				<reportElement style="Heading 1" x="36" y="39" width="255" height="58" uuid="dd5e3e92-dc56-42ef-90df-54bf61968a42"/>
+				<textElement>
+					<font size="36"/>
+				</textElement>
+				<text><![CDATA[Filmes-In]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="318" splitType="Stretch">
+			<barChart>
+				<chart>
+					<reportElement x="59" y="0" width="687" height="316" uuid="afcee82f-487e-41ce-b63d-cc19d72238dd"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{titulo}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{titulo}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{count(uf.Filme_idFilme)}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowTickLabels="true" isShowTickMarks="true">
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat verticalTickLabels="true"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="69" splitType="Stretch">
+			<staticText>
+				<reportElement x="59" y="0" width="588" height="31" uuid="d198f62f-7fe8-424f-a02b-de82aa0074c5"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Quantidade de usuários que demonstraram interesse em:]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="762" y="0" width="40" height="20" uuid="f04dc5d1-a2f4-48c4-a19b-1be6daf731d8"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="682" y="0" width="80" height="20" uuid="c0aa1ac4-3459-4243-8803-7fdd1e8fb07a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

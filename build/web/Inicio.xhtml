@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Início</title>
+        <link rel="icon" href="fotos/favicon.jpg" type="image/x-icon"/>
+<link rel="shortcut icon" href="fotos/favicon.jpg" type="image/x-icon" />
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+        <!-- Bootstrap Core CSS -->
+        <link href="faces/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link href="faces/css/small-business.css" rel="stylesheet"/>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </h:head>
+
+    <br><br/>
+        <h:body>
+            <!-- Navigation -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="Inicio.xhtml">
+                            <img src="fotos/logo.png" alt=""></img>
+                        </a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="Inicio.xhtml">Início</a>
+                            </li>
+                            <li>
+                                <a href="Usuario.xhtml" value="#{usuarioControle.atualizaInfoUsu()}">Meu Perfil</a>
+                            </li>
+                            <li>
+                                <a href="FilmesUsuario.xhtml" action="#{usuarioFilmeControle.atualizarFilme2()}">Meus Filmes</a>
+                            </li>
+                            <li>
+                                <a href="contato.xhtml">Contato</a>
+                            </li>
+                            <li>
+                                <a onclick="PF('desconect').show()">Desconectar</a>
+                        
+                            </li>
+                            
+                            
+                            <li>
+                                <a>Bem vindo: <h:outputText value="#{usuarioControle.usuario.nome}"></h:outputText></a>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container -->
+            </nav>
+
+            <!-- Page Content -->
+            <div class="container">
+
+                <!-- Heading Row -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <img class="img-responsive img-rounded" src="faces/fotos/bg.png" alt=""></img>
+                    </div>
+                    <!-- /.col-md-8 -->
+                    <div class="col-md-4">
+                        <h1>Filme-In </h1>
+                        <h3>Não perca nenhuma estréia!</h3>
+                        <p>Escolha os filmes que deseja assistir no cinema e deixe que nós lembraremos você das datas de estréia! Clique no botão abaixo e comece a usar agora mesmo nossa ferramenta!</p>
+                        <a class="btn btn-primary btn-lg" href="FilmesEscolher.xhtml" value="#{filmeControle.atualizarFilmeEscolha()}">Comece agora!</a>
+                    </div>
+                    <!-- /.col-md-4 -->
+                </div>
+                <!-- /.row -->
+
+                <hr>
+                </hr>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h2 class="card-title">Começando</h2>
+                                <p class="card-text">Cadastre-se como um usuário em nossa ferramenta, só necessitará ofertar algumas informações básicas sobre você, assim poderá usufruir de todos os nossos serviços e ferramentas.</p>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <!-- /.col-md-4 -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h2 class="card-title">Escolhas</h2>
+                                <p class="card-text">Assim que terminar seu cadastro, será lhe fornecida uma lista de filmes em produção, filtrada especialmente pelos nossos administradores, podendo assim escolher por quais deles você tem preferência.</p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- /.col-md-4 -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h2 class="card-title">Receba em seu e-mail!</h2>
+                                <p class="card-text">Com a sua lista feita, os administradores conseguirão lhe atender da melhor forma, lhe enviando um lembrete na data de estréia de cada filme.</p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- /.col-md-4 -->
+
+                </div>
+            </div>
+            <p:confirmDialog id="confirmaExclusao" 
+                                 message="Deseja realmente sair?"  
+                                 header="Saindo" 
+                                 widgetVar="desconect">
+                    <h:form id="formPainelExcluir"> 
+                        <p:commandButton value="Sim" action="#{usuarioControle.doLogout()}" oncomplete="PF('desconect').hide()"/>
+                         <p:commandButton value="Não" oncomplete="PF('desconect').hide()"/>
+                    </h:form>
+                </p:confirmDialog> 
+        </h:body>
+    </br>
+</html>
